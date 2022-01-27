@@ -1,3 +1,4 @@
+const validateEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 function storeData() {
     let data = localStorage.getItem("userData");
     console.log(data);
@@ -7,12 +8,23 @@ function storeData() {
         userEmail,
         userPass
     }
+    /* const validateEmail = (userEmail) => {
+
+     return String(userEmail)
+          .toLowerCase()
+          .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          );
+      }; */
    
-    if (!data) {
+    if (!data && String(userEmail).toLowerCase().match(validateEmail)) {
         localStorage.setItem("userData", JSON.stringify([obj]))
     }
+    else if((!data && !String(userEmail).toLowerCase().match(validateEmail) || !String(userEmail).toLowerCase().match(validateEmail) )){
+        alert("Please write correct email")
+    }
     
-    else {
+    else if(String(userEmail).toLowerCase().match(validateEmail)){
         let usersData = JSON.parse(data);
         let flag = false;
         for(var i = 0; i < usersData.length; i++){
@@ -59,4 +71,19 @@ function delOne(){
 }
 function delAll(){
     localStorage.removeItem("userData")
+}
+function Password(e){
+    var input = document.getElementById("userPassword");
+   switch (input.type) {
+       case "password":
+        e.className = "far fa-eye-slash";
+        input.type = "text";
+           break;
+        case "text":
+        e.className = "far fa-eye";
+        input.type = "password";
+   
+       default:
+           break;
+   }
 }
